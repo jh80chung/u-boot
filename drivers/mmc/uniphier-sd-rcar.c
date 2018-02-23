@@ -80,6 +80,7 @@ static unsigned int uniphier_sd_init_tuning(struct uniphier_sd_priv *priv)
 		SH_MOBILE_SDHI_SCC_DTCNTL_TAPNUM_MASK;
 }
 
+#if CONFIG_IS_ENABLED(MMC_HS200_SUPPORT)
 void rcar_gen3_sd_reset_tuning(struct uniphier_sd_priv *priv)
 {
 	u32 reg;
@@ -105,6 +106,7 @@ void rcar_gen3_sd_reset_tuning(struct uniphier_sd_priv *priv)
 	reg &= ~SH_MOBILE_SDHI_SCC_RVSCNTL_RVSEN;
 	uniphier_sd_writel(priv, reg, SH_MOBILE_SDHI_SCC_RVSCNTL);
 }
+#endif
 
 static void uniphier_sd_prepare_tuning(struct uniphier_sd_priv *priv,
 				       unsigned long tap)
@@ -223,6 +225,7 @@ static int uniphier_sd_select_tuning(struct uniphier_sd_priv *priv,
 	return 0;
 }
 
+#if CONFIG_IS_ENABLED(MMC_HS200_SUPPORT)
 int rcar_gen3_sd_execute_tuning(struct udevice *dev, uint opcode)
 {
 	struct uniphier_sd_priv *priv = dev_get_priv(dev);
@@ -286,3 +289,4 @@ out:
 
 	return ret;
 }
+#endif
